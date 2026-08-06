@@ -19,8 +19,9 @@ def clean_text(text: str) -> str:
 
     return cleaned.strip()
 
-# Step 2 - tokenize (not yet solved)
-# TODO: implement
+# Step 2 - tokenize
+def tokenize(text: str) -> list:
+    return text.split()
 
 # Step 3 - tokenize_corpus (not yet solved)
 # TODO: implement
