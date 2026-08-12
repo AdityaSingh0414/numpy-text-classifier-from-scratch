@@ -140,8 +140,34 @@ def tokens_to_bow(tokens: list, vocab: dict) -> np.ndarray:
             bow[index]+=1
     return bow
 
-# Step 8 - corpus_to_bow_matrix (not yet solved)
-# TODO: implement
+# Step 8 - corpus_to_bow_matrix
+import numpy as np
+
+
+def corpus_to_bow_matrix(tokenized_docs: list, vocab: dict) -> np.ndarray:
+    # Number of documents = number of rows
+    n_docs = len(tokenized_docs)
+
+    # Number of vocabulary words = number of columns
+    vocab_size = len(vocab)
+
+    # Create an empty matrix filled with zeros
+    # Shape = (number of documents, vocabulary size)
+    # Example: 3 documents and 2 vocabulary words -> (3, 2)
+    bow_matrix = np.zeros((n_docs, vocab_size), dtype=float)
+
+    # Process every document one by one
+    for i, tokens in enumerate(tokenized_docs):
+
+        # Convert the current document into a 1-D BoW vector
+        # Example: ['hello', 'hello'] -> [2., 0.]
+        bow_vector = tokens_to_bow(tokens, vocab)
+
+        # Put this document's BoW vector into row i
+        bow_matrix[i] = bow_vector
+
+    # Return the complete 2-D BoW matrix
+    return bow_matrix
 
 # Step 9 - compute_document_frequencies (not yet solved)
 # TODO: implement
