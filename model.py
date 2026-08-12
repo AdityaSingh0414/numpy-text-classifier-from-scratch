@@ -34,8 +34,62 @@ def tokenize_corpus(texts: list) -> list:
         corpus_tokens.append(tokens)
     return corpus_tokens
 
-# Step 4 - split_train_val_test_indices (not yet solved)
-# TODO: implement
+# Step 4 - split_train_val_test_indices
+# def split_train_val_test_indices(n_samples: int, val_fraction: float, test_fraction: float, seed: int = 0) -> tuple:
+#     # TODO: Produce shuffled index arrays that partition n_samples into train/val/test
+    
+#     np.random.seed(seed)
+#     indices= np.arange(n_samples)
+#     np.random.shuffle(indices)
+#     n_val=  int(n_samples* val_fraction)
+#     n_test= int(n_samples*test_fraction)
+#     n_train = n_samples - n_val - n_test
+#     train_idx=indices[:n_train]
+#     val_idx = indices[n_train:n_train + n_val]
+#     test_idx = indices[n_train + n_val:]
+#     return train_idx, val_idx, test_idx
+import numpy as np
+
+
+def split_train_val_test_indices(
+    n_samples: int,
+    val_fraction: float,
+    test_fraction: float,
+    seed: int = 0
+) -> tuple:
+    # Set NumPy's random seed so that we get the same shuffle every time
+    np.random.seed(seed)
+
+    # Create an array containing indices from 0 to n_samples - 1
+    # Example: n_samples = 10 -> [0, 1, 2, ..., 9]
+    indices = np.arange(n_samples)
+
+    # Shuffle the indices randomly
+    # The original indices array is shuffled in-place
+    np.random.shuffle(indices)
+
+    # Calculate the number of validation samples
+    # int() truncates the decimal part
+    # Example: 10 * 0.2 = 2.0 -> 2
+    n_val = int(n_samples * val_fraction)
+
+    # Calculate the number of test samples
+    n_test = int(n_samples * test_fraction)
+
+    # The remaining samples go to the training set
+    n_train = n_samples - n_val - n_test
+
+    # Take the first n_train shuffled indices for training
+    train_idx = indices[:n_train]
+
+    # Take the next n_val indices for validation
+    val_idx = indices[n_train:n_train + n_val]
+
+    # Take the remaining indices for testing
+    test_idx = indices[n_train + n_val:]
+
+    # Return train, validation, and test indices in that order
+    return train_idx, val_idx, test_idx
 
 # Step 5 - count_word_frequencies (not yet solved)
 # TODO: implement
