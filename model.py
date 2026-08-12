@@ -169,8 +169,29 @@ def corpus_to_bow_matrix(tokenized_docs: list, vocab: dict) -> np.ndarray:
     # Return the complete 2-D BoW matrix
     return bow_matrix
 
-# Step 9 - compute_document_frequencies (not yet solved)
-# TODO: implement
+# Step 9 - compute_document_frequencies
+import numpy as np
+
+
+def compute_document_frequencies(bow_matrix: np.ndarray) -> np.ndarray:
+    # Check whether each word appears in each document
+    # > 0 means word appears at least once
+    # Example:
+    # [[1, 0, 2],
+    #  [0, 0, 1]]
+    #
+    # becomes:
+    # [[True, False, True],
+    #  [False, False, True]]
+    appears = bow_matrix > 0
+
+    # Count True values column-wise
+    # axis=0 means "look down each column"
+    # Each True represents one document containing that word
+    df = np.sum(appears, axis=0)
+
+    # Return document frequency for every vocabulary word
+    return df
 
 # Step 10 - compute_idf (not yet solved)
 # TODO: implement
