@@ -210,11 +210,22 @@ def transform_tfidf(bow_matrix: np.ndarray, idf: np.ndarray) -> np.ndarray:
     return tfidf
 
 # Step 12 - fit_tfidf
+import numpy as np
+
+
 def fit_tfidf(bow_train: np.ndarray) -> np.ndarray:
-    # TODO: Fit IDF on the training BoW matrix by chaining DF and IDF.
-    df= compute_document_frequencies(bow_train)
-    n_docs= bow_train.shape[0]
-    idf= compute_idf(df,n_docs)
+    # Step 1: Calculate Document Frequency (DF)
+    # DF batata hai ki har word kitne documents mein present hai
+    df = compute_document_frequencies(bow_train)
+
+    # Step 2: Get the number of training documents
+    n_docs = bow_train.shape[0]
+
+    # Step 3: Convert DF into smoothed IDF
+    # Existing compute_idf() function ka use kar rahe hain
+    idf = compute_idf(df, n_docs)
+
+    # Step 4: Return the fitted IDF vector
     return idf
 
 # Step 13 - sigmoid (not yet solved)
