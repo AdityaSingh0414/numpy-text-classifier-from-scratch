@@ -193,8 +193,15 @@ def compute_document_frequencies(bow_matrix: np.ndarray) -> np.ndarray:
     # Return document frequency for every vocabulary word
     return df
 
-# Step 10 - compute_idf (not yet solved)
-# TODO: implement
+# Step 10 - compute_idf
+def compute_idf(df: np.ndarray, n_docs: int) -> np.ndarray:
+    # TODO: Compute smoothed IDF idf_j = log((n_docs + 1) / (df_j + 1)) + 1
+    numerator= n_docs+1
+    denominator=df+1
+    idf= np.log(numerator/denominator)+1
+    return idf 
+
+    #IDF tells us how rare a word is across documents.
 
 # Step 11 - transform_tfidf (not yet solved)
 # TODO: implement
