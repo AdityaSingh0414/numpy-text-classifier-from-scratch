@@ -48,7 +48,7 @@ def tokenize_corpus(texts: list) -> list:
 #     val_idx = indices[n_train:n_train + n_val]
 #     test_idx = indices[n_train + n_val:]
 #     return train_idx, val_idx, test_idx
-import numpy as np
+
 
 
 def split_train_val_test_indices(
