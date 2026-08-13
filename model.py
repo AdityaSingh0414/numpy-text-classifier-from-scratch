@@ -228,8 +228,24 @@ def fit_tfidf(bow_train: np.ndarray) -> np.ndarray:
     # Step 4: Return the fitted IDF vector
     return idf
 
-# Step 13 - sigmoid (not yet solved)
-# TODO: implement
+# Step 13 - sigmoid
+def sigmoid(z: np.ndarray) -> np.ndarray:
+    # TODO: Map logits to probabilities with a numerically stable logistic sigmoid.
+    z = np.asarray(z, dtype=float)
+
+    result = np.empty_like(z)
+
+    # For positive values: 1 / (1 + exp(-z))
+    positive = z >= 0
+    result[positive] = 1 / (1 + np.exp(-z[positive]))
+
+    # For negative values: exp(z) / (1 + exp(z))
+    # This avoids overflow from exp(-z)
+    negative = ~positive
+    exp_z = np.exp(z[negative])
+    result[negative] = exp_z / (1 + exp_z)
+
+    return result
 
 # Step 14 - logistic_predict_proba (not yet solved)
 # TODO: implement
