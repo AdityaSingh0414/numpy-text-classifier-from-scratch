@@ -371,8 +371,22 @@ def predict_labels(proba: np.ndarray, threshold: float = 0.5) -> np.ndarray:
     # TODO: Convert probabilities to hard binary labels via the threshold...
     return (proba >= threshold).astype(int)
 
-# Step 21 - confusion_counts (not yet solved)
-# TODO: implement
+# Step 21 - confusion_counts
+def confusion_counts(y_true: np.ndarray, y_pred: np.ndarray) -> tuple:
+    # TODO: Return the four confusion-matrix counts (tp, fp, tn, fn) as Python ints
+    # True Positive: actual 1, predicted 1
+    tp = np.sum((y_true == 1) & (y_pred == 1))
+
+    # False Positive: actual 0, predicted 1
+    fp = np.sum((y_true == 0) & (y_pred == 1))
+
+    # True Negative: actual 0, predicted 0
+    tn = np.sum((y_true == 0) & (y_pred == 0))
+
+    # False Negative: actual 1, predicted 0
+    fn = np.sum((y_true == 1) & (y_pred == 0))
+
+    return int(tp), int(fp), int(tn), int(fn)
 
 # Step 22 - metrics_from_counts (not yet solved)
 # TODO: implement
