@@ -311,11 +311,51 @@ def initialize_logistic_params(n_features: int) -> tuple:
     b=0.0
     return w,b
 
-# Step 18 - gradient_descent_step (not yet solved)
-# TODO: implement
+# Step 18 - gradient_descent_step
+def gradient_descent_step(X: np.ndarray, y: np.ndarray, w: np.ndarray, b: float, lr: float, l2_lambda: float) -> tuple:
+    # TODO: Run one full-batch gradient descent update; return (w_new, b_new, loss).
+    
+    # 1. Predict probabilities
+    y_prob= logistic_predict_proba(X,w,b)
 
-# Step 19 - train_logistic_regression (not yet solved)
-# TODO: implement
+    # 2. Calculate loss BEFORE updating parameters
+    loss = binary_cross_entropy(y, y_prob, w, l2_lambda)
+
+    # 3. Calculate gradients
+    dw, db = logistic_gradients(
+        X, y, y_prob, w, l2_lambda
+    )
+
+    # 4. Gradient Descent update
+    w_new = w - lr * dw
+    b_new = b - lr * db
+
+    return w_new, b_new, loss
+
+# Step 19 - train_logistic_regression
+def train_logistic_regression(X: np.ndarray, y: np.ndarray, lr: float, l2_lambda: float, n_epochs: int) -> tuple:
+    # TODO: Initialize params and run n_epochs of full-batch GD, recording loss..
+    
+    # Initialize weights and bias
+    w, b = initialize_logistic_params(X.shape[1])
+
+    # Store loss after every epoch
+    losses = []
+
+
+    # Training loop
+    for _ in range(n_epochs):
+
+        # One full-batch gradient descent step
+        w, b, loss = gradient_descent_step(
+            X, y, w, b, lr, l2_lambda
+        )
+
+        # Record loss
+        losses.append(loss)
+
+
+    return w, float(b), losses
 
 # Step 20 - predict_labels (not yet solved)
 # TODO: implement
