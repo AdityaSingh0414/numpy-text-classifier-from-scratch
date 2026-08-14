@@ -92,16 +92,24 @@ def split_train_val_test_indices(
     return train_idx, val_idx, test_idx
 
 # Step 5 - count_word_frequencies
+# ── Step 005  count_word_frequencies ──
 def count_word_frequencies(tokenized_docs: list) -> dict:
-    # TODO: Return a dict mapping each unique token to its total count...
-    word_counts={}
+    """Count how many times each unique token appears across the whole corpus.
+
+    Args:
+        tokenized_docs: List of documents, where each document is a list of tokens
+                         (e.g. output of tokenize_corpus).
+
+    Returns:
+        dict mapping token -> total occurrence count (int) across ALL documents.
+    """
+    word_counts = {}
+
     for doc in tokenized_docs:
-        
         for token in doc:
-            if token in word_counts:
-                word_counts[token]+=1
-            else:
-                word_counts[token]=1
+            # dict.get(token, 0) returns 0 if token not seen yet, else current count
+            word_counts[token] = word_counts.get(token, 0) + 1
+
     return word_counts
 
 # Step 6 - build_vocabulary
@@ -388,8 +396,29 @@ def confusion_counts(y_true: np.ndarray, y_pred: np.ndarray) -> tuple:
 
     return int(tp), int(fp), int(tn), int(fn)
 
-# Step 22 - metrics_from_counts (not yet solved)
-# TODO: implement
+# Step 22 - metrics_from_counts
+import numpy as np
+
+def metrics_from_counts(tp: int, fp: int, tn: int, fn: int) -> dict:
+    precision = tp / (tp + fp) if (tp + fp) != 0 else 0.0
+
+    recall = tp / (tp + fn) if (tp + fn) != 0 else 0.0
+
+    if precision + recall != 0:
+        f1 = 2 * precision * recall / (precision + recall)
+    else:
+        f1 = 0.0
+
+    total = tp + fp + tn + fn
+
+    accuracy = (tp + tn) / total if total != 0 else 0.0
+
+    return {
+        "precision": float(precision),
+        "recall": float(recall),
+        "f1": float(f1),
+        "accuracy": float(accuracy)
+    }
 
 # Step 23 - tune_decision_threshold (not yet solved)
 # TODO: implement
