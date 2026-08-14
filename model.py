@@ -397,15 +397,21 @@ def confusion_counts(y_true: np.ndarray, y_pred: np.ndarray) -> tuple:
     return int(tp), int(fp), int(tn), int(fn)
 
 # Step 22 - metrics_from_counts
+# ── Step 022  metrics_from_counts ──
 def metrics_from_counts(tp: int, fp: int, tn: int, fn: int) -> dict:
+    # Precision = TP / (TP + FP), 0.0 if denominator is 0
     precision = tp / (tp + fp) if (tp + fp) != 0 else 0.0
+
+    # Recall = TP / (TP + FN), 0.0 if denominator is 0
     recall = tp / (tp + fn) if (tp + fn) != 0 else 0.0
 
+    # F1 = harmonic mean of precision and recall
     if precision + recall != 0:
         f1 = 2 * precision * recall / (precision + recall)
     else:
         f1 = 0.0
 
+    # Accuracy = (TP + TN) / total, 0.0 if there are no samples at all
     total = tp + fp + tn + fn
     accuracy = (tp + tn) / total if total != 0 else 0.0
 
