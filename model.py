@@ -137,6 +137,8 @@ def build_vocabulary(word_counts: dict, max_size: int) -> dict:
     return vocabulary
 
 # Step 7 - tokens_to_bow
+import numpy as np
+
 def tokens_to_bow(tokens: list, vocab: dict) -> np.ndarray:
     # Create a zero vector of size V
     bow = np.zeros(len(vocab), dtype=float)
