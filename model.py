@@ -471,8 +471,23 @@ def evaluate_predictions(y_true: np.ndarray, y_pred: np.ndarray) -> dict:
         "accuracy": metrics["accuracy"]
     }
 
-# Step 25 - vectorize_texts (not yet solved)
-# TODO: implement
+# Step 25 - vectorize_texts
+def vectorize_texts(texts: list, vocab: dict, idf: np.ndarray) -> np.ndarray:
+    # Clean and tokenize every text
+    tokenized_docs = []
+
+    for text in texts:
+        cleaned = clean_text(text)
+        tokens = tokenize(cleaned)
+        tokenized_docs.append(tokens)
+
+    # Convert tokenized documents to BoW matrix
+    bow_matrix = corpus_to_bow_matrix(tokenized_docs, vocab)
+
+    # Apply fitted IDF
+    tfidf_matrix = transform_tfidf(bow_matrix, idf)
+
+    return tfidf_matrix
 
 # Step 26 - predict_text (not yet solved)
 # TODO: implement
